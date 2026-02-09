@@ -90,10 +90,33 @@ class Portfolio:
 class Strategy:
     """Base class for trading strategies."""
 
-    def __init__(self):
+    def __init__(self, take_profit_pct=None, stop_loss_pct=None, **kwargs):
         self.data: Optional[pd.DataFrame] = None
         self.current_idx: int = 0
         self.orders: List[Order] = []
+        self.take_profit_pct = take_profit_pct
+        self.stop_loss_pct = stop_loss_pct
+        # Ignore extra kwargs
+
+    def check_exit_signals(self):
+        """Check take profit and stop loss signals for all positions."""
+        if not hasattr(self, 'portfolio') or self.portfolio is None:
+            return
+
+        current_price = self.current_price
+        for symbol, position in self.portfolio.positions.items():
+            entry_price = position.entry_price
+            # Calculate percentage change
+            pct_change = (current_price - entry_price) / entry_price * 100
+            if position.side == OrderSide.SELL:
+                pct_change = -pct_change  # For short positions, price decrease is profit
+
+            # Check take profit
+            if self.take_profit_pct is not None and pct_change >= self.take_profit_pct:
+                self.close_position(symbol)
+            # Check stop loss
+            elif self.stop_loss_pct is not None and pct_change <= -self.stop_loss_pct:
+                self.close_position(symbol)
 
     def set_data(self, data: pd.DataFrame):
         """Set the historical data for the strategy."""
@@ -137,8 +160,15 @@ class Strategy:
 
     def close_position(self, symbol: str = "BTC-USD"):
         """Close all positions for a symbol."""
-        # This will be handled by the engine based on portfolio state
-        pass
+        if not hasattr(self, 'portfolio') or self.portfolio is None:
+            return
+        if symbol not in self.portfolio.positions:
+            return
+        position = self.portfolio.positions[symbol]
+        if position.side == OrderSide.BUY:
+            self.sell(position.size)
+        else:
+            self.buy(position.size)
 
     def get_ohlc(self, lookback: int = 20) -> pd.DataFrame:
         """Get OHLC data for the last N periods."""
@@ -304,6 +334,9 @@ class BacktestEngine:
 
             # Clear orders after execution attempt
             self.strategy.orders = []
+
+            # Check TP/SL exit signals
+            self.strategy.check_exit_signals()
 
             # Run strategy logic
             self.strategy.next()

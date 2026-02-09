@@ -12,8 +12,8 @@ from .core import Strategy, OrderSide
 class BuyAndHold(Strategy):
     """Simple buy and hold strategy."""
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.bought = False
 
     def next(self):
@@ -27,8 +27,8 @@ class BuyAndHold(Strategy):
 class SmaCrossover(Strategy):
     """Simple Moving Average crossover strategy."""
 
-    def __init__(self, fast: int = 20, slow: int = 50, position_size: float = 0.95):
-        super().__init__()
+    def __init__(self, fast: int = 20, slow: int = 50, position_size: float = 0.95, **kwargs):
+        super().__init__(**kwargs)
         self.fast = fast
         self.slow = slow
         self.position_size = position_size
@@ -74,9 +74,10 @@ class RSIStrategy(Strategy):
         period: int = 14,
         oversold: float = 30,
         overbought: float = 70,
-        position_size: float = 0.2
+        position_size: float = 0.2,
+        **kwargs
     ):
-        super().__init__()
+        super().__init__(**kwargs)
         self.period = period
         self.oversold = oversold
         self.overbought = overbought
@@ -120,9 +121,10 @@ class BollingerBandsStrategy(Strategy):
         self,
         period: int = 20,
         std_dev: float = 2.0,
-        position_size: float = 0.25
+        position_size: float = 0.25,
+        **kwargs
     ):
-        super().__init__()
+        super().__init__(**kwargs)
         self.period = period
         self.std_dev = std_dev
         self.position_size = position_size
@@ -173,9 +175,10 @@ class MACDStrategy(Strategy):
         fast: int = 12,
         slow: int = 26,
         signal: int = 9,
-        position_size: float = 0.9
+        position_size: float = 0.9,
+        **kwargs
     ):
-        super().__init__()
+        super().__init__(**kwargs)
         self.fast = fast
         self.slow = slow
         self.signal = signal
@@ -221,9 +224,10 @@ class GridTradingStrategy(Strategy):
         self,
         grid_levels: int = 10,
         grid_spacing: float = 0.02,  # 2% between grids
-        position_per_grid: float = 0.1
+        position_per_grid: float = 0.1,
+        **kwargs
     ):
-        super().__init__()
+        super().__init__(**kwargs)
         self.grid_levels = grid_levels
         self.grid_spacing = grid_spacing
         self.position_per_grid = position_per_grid
@@ -277,9 +281,10 @@ class TrailingStopStrategy(Strategy):
         entry_sma_fast: int = 10,
         entry_sma_slow: int = 30,
         trailing_pct: float = 0.05,
-        position_size: float = 0.9
+        position_size: float = 0.9,
+        **kwargs
     ):
-        super().__init__()
+        super().__init__(**kwargs)
         self.entry_sma_fast = entry_sma_fast
         self.entry_sma_slow = entry_sma_slow
         self.trailing_pct = trailing_pct

@@ -49,8 +49,9 @@ class ATRBreakoutStrategy(Strategy):
 
         # Filters
         min_atr: float = 0.0,
+        **kwargs
     ):
-        super().__init__()
+        super().__init__(**kwargs)
         # Entry parameters
         self.atr_multiplier = atr_multiplier
         self.rsi_oversold = rsi_oversold

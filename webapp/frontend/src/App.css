@@ -1,0 +1,138 @@
+#root {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.chart-section, .table-section {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1rem;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.table-section {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table th, table td {
+  border: 1px solid var(--border-color);
+  padding: 10px 8px;
+  text-align: left;
+}
+
+table th {
+  background-color: var(--bg-secondary);
+  font-weight: 600;
+  padding: 12px 8px;
+}
+
+table tbody tr:hover {
+  background-color: color-mix(in srgb, var(--bg-secondary) 50%, transparent);
+}
+
+.chart-controls {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+  padding: 8px;
+  background-color: var(--bg-secondary);
+  border-radius: 4px;
+}
+
+.chart-controls label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.interactive-chart {
+  margin-top: 16px;
+}
+
+.run-selector {
+  margin: 20px 0;
+  padding: 12px;
+  background-color: var(--bg-secondary);
+  border-radius: 4px;
+}
+
+.run-selector label {
+  margin-right: 8px;
+  font-weight: 500;
+}
+
+.run-selector select {
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  min-width: 400px;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.backtest-job-status {
+  margin: 2rem 0;
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+}
+
+.backtest-job-status h2 {
+  margin-top: 0;
+}
+
+.backtest-job-status h3 {
+  margin: 1rem 0 0.5rem 0;
+}
+
+.jobs-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+}
+
+.jobs-table th, .jobs-table td {
+  border: 1px solid var(--border-color);
+  padding: 8px;
+  text-align: left;
+}
+
+.jobs-table th {
+  background-color: var(--bg-secondary);
+  font-weight: 600;
+}
+
+.jobs-table tbody tr:hover {
+  background-color: color-mix(in srgb, var(--bg-secondary) 50%, transparent);
+}
+
+.error {
+  color: red;
+  padding: 1rem;
+  border: 1px solid red;
+  border-radius: 4px;
+  background-color: color-mix(in srgb, red 10%, transparent);
+}

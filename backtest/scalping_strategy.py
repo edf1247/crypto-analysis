@@ -41,9 +41,10 @@ class ScalpingStrategy(Strategy):
         macd_signal_ma: str = "EMA",
         position_size: float = 0.95,
         stop_loss_pct: float = 0.02,
-        take_profit_pct: float = 0.05
+        take_profit_pct: float = 0.05,
+        **kwargs
     ):
-        super().__init__()
+        super().__init__(take_profit_pct=take_profit_pct, stop_loss_pct=stop_loss_pct, **kwargs)
         # Store all parameters
         self.sma_length = sma_length
         self.ema_length = ema_length
